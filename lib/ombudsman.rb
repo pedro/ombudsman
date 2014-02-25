@@ -29,8 +29,8 @@ module Ombudsman
     post "/heroku/resources" do
       options = MultiJson.decode(request.env["rack.input"].read)
       app = App.create(
-        heroku_id: options[:heroku_id],
-        syslog_token: options[:syslog_token])
+        heroku_id: options["heroku_id"],
+        syslog_token: options["syslog_token"])
       respond(app.serialized)
     end
 

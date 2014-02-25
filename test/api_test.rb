@@ -18,6 +18,14 @@ describe Ombudsman::API do
       authorize "ombudsman", "secret"
       post "/heroku/resources", MultiJson.encode(@params)
       assert_equal 200, last_response.status
+      app = App.first(id: last_json["id"])
+      assert_equal "app123@heroku.com", app.heroku_id
+    end
+
+    it "renders drain info" do
+      authorize "ombudsman", "secret"
+      post "/heroku/resources", MultiJson.encode(@params)
+      assert_equal 200, last_response.status
       assert_equal "http://localhost:3000/drain", last_json["syslog_drain_url"]
     end
   end
