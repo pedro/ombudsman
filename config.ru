@@ -6,3 +6,4 @@ require "./lib/ombudsman"
 
 $stdout.sync = true
 run Ombudsman::API
+run Ombudsman::Drain

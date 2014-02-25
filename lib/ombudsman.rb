@@ -41,7 +41,9 @@ module Ombudsman
       app.destroy
       respond({})
     end
+  end
 
+  class Drain < Sinatra::Base
     post "/drain" do
       puts "params: #{params.inspect}"
       puts "body:   #{request.env["rack.input"].read}"
