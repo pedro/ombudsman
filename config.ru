@@ -5,5 +5,6 @@ Bundler.require
 require "./lib/ombudsman"
 
 $stdout.sync = true
+
+use Ombudsman::Drain
 run Ombudsman::API
-run Ombudsman::Drain
