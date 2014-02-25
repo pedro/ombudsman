@@ -1,0 +1,18 @@
+{
+  "id": "ombudsman",
+  "api": {
+    "config_vars": [ "OMBUDSMAN_DOESNT_SET_CONFIG_VARS_COMMA_JUST_SETTING_THIS_SO_KENSA_WILL_STOP_COMPLAINING" ],
+    "regions": [ "us" ],
+    "password": "foo",
+    "sso_salt": "bar",
+    "production": {
+      "base_url": "https://ombudsman.herokuapp.com/heroku/resources",
+      "sso_url": "https://ombudsman.herokuapp.com/sso/login"
+    },
+    "test": {
+      "base_url": "http://localhost:5000/heroku/resources",
+      "sso_url": "http://localhost:5000/sso/login"
+    }
+  },
+  "requires": ["syslog_drain"]
+}
