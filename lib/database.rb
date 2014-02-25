@@ -1,26 +1,3 @@
-migration "create apps" do
-  database.create_table :apps do
-    primary_key :id
-    text        :heroku_id
-    text        :syslog_token
-  end
-end
-
-migration "add drain_secret" do
-  database.add_column :apps, :drain_secret, :text
-end
-
-migration "create requests" do
-  database.create_table :requests do
-    primary_key :id
-    foreign_key :app_id
-    text        :secret
-    text        :verb
-    text        :path
-    integer     :status
-  end
-end
-
 class App < Sequel::Model
   def before_create
     self.drain_secret ||= SecureRandom.hex(8)

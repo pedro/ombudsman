@@ -1,5 +1,6 @@
 require "sinatra"
 require "sinatra/sequel"
+require "./lib/migrations"
 require "./lib/database"
 
 module Ombudsman
