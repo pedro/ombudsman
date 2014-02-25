@@ -13,6 +13,8 @@ end
 migration "create requests" do
   database.create_table :requests do
     primary_key :id
+    foreign_key :app_id
+    text        :secret
     text        :verb
     text        :path
   end
@@ -43,10 +45,14 @@ class Log
     # STABLE AS FUCK:
     return false unless raw.include?("host heroku router - at=info method=")
 
-    unless data = raw.match(/method=(\w+) path=(.*) /)
+    unless data = raw.match(/method=(\w+) path=([^ ]+) /)
       return false
     end
 
-    Request.create(verb: data[1].downcase, path: data[2])
+    Request.create(
+      app_id: app_id,
+      secret: secret,
+      verb: data[1].downcase,
+      path: data[2])
   end
 end
