@@ -20,3 +20,11 @@ migration "create requests" do
     integer     :status
   end
 end
+
+migration "create endpoints" do
+  database.create_table :endpoints do
+    primary_key :id
+    foreign_key :app_id
+    text        :signature
+  end
+end

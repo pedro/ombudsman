@@ -1,4 +1,6 @@
 class App < Sequel::Model
+  one_to_many :endpoints
+
   def before_create
     self.drain_secret ||= SecureRandom.hex(8)
   end
@@ -16,4 +18,8 @@ class App < Sequel::Model
 end
 
 class Request < Sequel::Model
+end
+
+class Endpoint < Sequel::Model
+  many_to_one :app
 end
