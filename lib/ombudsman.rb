@@ -17,7 +17,7 @@ module Ombudsman
     before do
       unless authorized?
         response["WWW-Authenticate"] = %(Basic realm="Restricted Area")
-        throw(:halt, [401, "Not authorized\n"])
+        halt [401, "Not authorized"]
       end
     end
 
