@@ -17,6 +17,7 @@ migration "create requests" do
     text        :secret
     text        :verb
     text        :path
+    integer     :status
   end
 end
 
@@ -45,7 +46,7 @@ class Log
     # STABLE AS FUCK:
     return false unless raw.include?("host heroku router - at=info method=")
 
-    unless data = raw.match(/method=(\w+) path=([^ ]+) /)
+    unless data = raw.match(/method=(\w+) path=([^ ]+) .* status=(\d+)/)
       return false
     end
 
@@ -53,6 +54,7 @@ class Log
       app_id: app_id,
       secret: secret,
       verb: data[1].downcase,
-      path: data[2])
+      path: data[2],
+      status: data[3].to_i)
   end
 end

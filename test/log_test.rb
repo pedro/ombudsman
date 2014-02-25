@@ -13,6 +13,7 @@ describe Log do
       assert_equal "abc", req.secret
       assert_equal "get", req.verb
       assert_equal "/foo", req.path
+      assert_equal 200, req.status
     end
   end
 end
