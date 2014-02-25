@@ -44,9 +44,9 @@ module Ombudsman
   end
 
   class Drain < Sinatra::Base
-    post "/drain/:id" do
+    post "/drain/:id/:secret" do
       log = request.env["rack.input"].read
-      puts "log for #{id}: #{log}"
+      puts "log for #{params[:id]}/#{params[:secret]}: #{log}"
       ""
     end
   end
