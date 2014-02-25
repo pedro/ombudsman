@@ -3,6 +3,9 @@ ruby "2.1.0"
 
 gem "multi_json"
 gem "oj"
+gem "sequel"
+gem "sinatra-sequel"
+gem "pg"
 gem "sinatra"
 gem "unicorn"
 

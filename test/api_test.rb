@@ -4,7 +4,7 @@ describe Ombudsman::API do
   describe "POST /heroku/resources" do
     before do
       @params = {
-        foo: "bar"
+        heroku_id: "app123@heroku.com"
       }
       header "Content-Type", "application/json"
     end

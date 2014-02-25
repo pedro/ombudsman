@@ -1,5 +1,11 @@
+require "sinatra"
+require "sinatra/sequel"
+require "./lib/database"
+
 module Ombudsman
   class API < Sinatra::Base
+    set :database, ENV["DATABASE_URL"]
+
     helpers do
       def authorized?
         @auth ||=  Rack::Auth::Basic::Request.new(request.env)
@@ -17,9 +23,10 @@ module Ombudsman
 
     post "/heroku/resources" do
       options = MultiJson.decode(request.env["rack.input"].read)
-      app = {}
+      app = App.create(
+        heroku_id: options[:heroku_id])
       content_type :json
-      MultiJson.encode(app)
+      MultiJson.encode(app.serialized)
     end
   end
 end
