@@ -17,16 +17,4 @@ class Aggregator
       @signmap[signature] ||= Endpoint.create(app: app, signature: signature)
     end
   end
-
-  def identified?(parts)
-    false
-  end
-
-  def identify(parts)
-
-    Endpoint.create(
-      app: app,
-      signature: parts.join("/"))
-  end
-
 end
