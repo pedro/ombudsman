@@ -7,10 +7,14 @@ migration "create apps" do
 end
 
 class App < Sequel::Model
+  def log_drain_url
+    ENV["LOG_DRAIN_URL"] + "/#{id}"
+  end
+
   def serialized
     {
       id: id,
-      syslog_drain_url: ENV["LOG_DRAIN_URL"]
+      syslog_drain_url: log_drain_url
     }
   end
 end
