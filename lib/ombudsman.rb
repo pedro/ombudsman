@@ -46,6 +46,7 @@ module Ombudsman
   class Drain < Sinatra::Base
     post "/drain" do
       log = request.env["rack.input"].read
+      puts log
       ""
     end
   end
