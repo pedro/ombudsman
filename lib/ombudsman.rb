@@ -2,6 +2,7 @@ require "sinatra"
 require "sinatra/sequel"
 require "./lib/migrations"
 require "./lib/database"
+require "./lib/log"
 
 module Ombudsman
   class API < Sinatra::Base
