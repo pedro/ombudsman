@@ -5,7 +5,7 @@ class Aggregator
     @app = app
     @requests = requests
     @signmap = app.endpoints.inject({}) do |h, endpoint|
-      h[endpoint.signature] = e
+      h[endpoint.signature] = endpoint
       h
     end
   end

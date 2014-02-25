@@ -28,5 +28,13 @@ describe Aggregator do
       @agg.work!
       assert_equal %w( /foo/* /foo/*/bar/* ), @app.endpoints.map(&:signature).sort
     end
+
+    it "reuses existing signatures" do
+      Endpoint.create(app: @app, signature: "/foo/*")
+      @agg = Aggregator.new(@app, [])
+      @agg.requests << Request.new(path: "/foo/2")
+      @agg.work!
+      assert_equal %w( /foo/* ), @app.endpoints.map(&:signature).sort
+    end
   end
 end
