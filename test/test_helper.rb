@@ -1,3 +1,6 @@
+ENV["HEROKU_USERNAME"] = "ombudsman"
+ENV["HEROKU_PASSWORD"] = "secret"
+
 require "rubygems"
 require "bundler"
 
