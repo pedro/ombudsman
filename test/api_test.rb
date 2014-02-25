@@ -20,4 +20,28 @@ describe Ombudsman::API do
       assert_equal 200, last_response.status
     end
   end
+
+  describe "DELETE /heroku/resources" do
+    before do
+      @app = App.create
+    end
+
+    it "authenticates" do
+      delete "/heroku/resources/#{@app.id}"
+      assert_equal 401, last_response.status
+    end
+
+    it "renders a 404 if app doesn't exist" do
+      authorize "ombudsman", "secret"
+      delete "/heroku/resources/1234"
+      assert_equal 404, last_response.status
+    end
+
+    it "deletes the app" do
+      authorize "ombudsman", "secret"
+      delete "/heroku/resources/#{@app.id}"
+      assert_equal 200, last_response.status
+      assert_equal nil, App.find(id: @app.id)
+    end
+  end
 end

@@ -12,6 +12,11 @@ module Ombudsman
         @auth.provided? && @auth.basic? && @auth.credentials &&
         @auth.credentials == [ENV["HEROKU_USERNAME"], ENV["HEROKU_PASSWORD"]]
       end
+
+      def respond(hash)
+        content_type :json
+        MultiJson.encode(hash)
+      end
     end
 
     before do
@@ -25,8 +30,15 @@ module Ombudsman
       options = MultiJson.decode(request.env["rack.input"].read)
       app = App.create(
         heroku_id: options[:heroku_id])
-      content_type :json
-      MultiJson.encode(app.serialized)
+      respond(app.serialized)
+    end
+
+    delete "/heroku/resources/:id" do
+      unless app = App.find(id: params[:id])
+        halt [404, "App not found"]
+      end
+      app.destroy
+      respond({})
     end
   end
 end
