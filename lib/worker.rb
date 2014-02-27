@@ -7,7 +7,7 @@ class Worker
 
   def work
     if pop = Cache.blpop("requests", timeout: 5)
-      args = MultiJson.decode(pop.last)
+      args = MultiJson.decode(pop.last).with_indifferent_access
       puts "read request #{args.inspect}"
       req  = Request.new(args)
       return unless app = req.app

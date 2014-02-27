@@ -1,6 +1,9 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    active_support (3.0.0)
+      activesupport (= 3.0.0)
+    activesupport (3.0.0)
     bacon (1.2.0)
     kgio (2.9.2)
     multi_json (1.8.4)
@@ -32,6 +35,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active_support
   multi_json
   oj
   pg
