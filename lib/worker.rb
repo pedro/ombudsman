@@ -8,8 +8,8 @@ class Worker
   def work
     if pop = Cache.blpop("requests", timeout: 5)
       args = MultiJson.decode(pop.last)
+      puts "read request #{args.inspect}"
       req  = Request.new(args)
-      puts "read request #{req}"
       return unless app = req.app
       Aggregator.new(app, req).work!
     end
