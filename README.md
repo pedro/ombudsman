@@ -1,6 +1,6 @@
 # Ombudsman
 
-Heroku add-on that sits and inspects your logs, alerting when it detects a spike in error rates for individual endpoints.
+Heroku add-on that sits and inspects your logs, alerting when it detects a spike in error rates for your RESTful API.
 
 ## Usage
 
