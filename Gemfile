@@ -6,6 +6,7 @@ gem "oj"
 gem "sequel"
 gem "sinatra-sequel"
 gem "pg"
+gem "redis"
 gem "sinatra"
 gem "unicorn"
 
