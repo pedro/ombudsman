@@ -32,3 +32,7 @@ end
 migration "index" do
   database.add_index :endpoints, :app_id
 end
+
+migration "add health" do
+  database.add_column :endpoints, :health, :text
+end
