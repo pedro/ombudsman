@@ -8,7 +8,7 @@ module Clockwork
     Endpoint.dataset.use_cursor.each do |e|
       stats = Stats.summary(e)
       puts "updating #{e.id}: #{stats.inspect}"
-      e.update(stats: stats)
+      Health.update(e, stats)
     end
   end
 end
