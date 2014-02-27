@@ -7,7 +7,7 @@ class Log
       return false
     end
 
-    Request.create(
+    Request.new(
       app_id: app_id,
       secret: secret,
       verb: data[1].downcase,

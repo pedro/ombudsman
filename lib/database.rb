@@ -17,7 +17,26 @@ class App < Sequel::Model
   end
 end
 
-class Request < Sequel::Model
+class Request
+  attr_accessor :app_id, :secret, :verb, :path, :status
+
+  def initialize(args)
+    @app_id = args[:app_id]
+    @secret = args[:secret]
+    @verb   = args[:verb]
+    @path   = args[:path]
+    @status = args[:status]
+  end
+
+  def serialized
+    {
+      app_id: app_id,
+      secret: secret,
+      verb:   verb,
+      path:   path,
+      status: status,
+    }
+  end
 end
 
 class Endpoint < Sequel::Model

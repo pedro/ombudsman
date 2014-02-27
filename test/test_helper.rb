@@ -20,6 +20,10 @@ class MiniTest::Spec
     Ombudsman::API
   end
 
+  before :each do
+    Cache.flushdb
+  end
+
   def last_json
     @last_json ||= MultiJson.decode(last_response.body)
   end

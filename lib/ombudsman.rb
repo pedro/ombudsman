@@ -1,6 +1,7 @@
 require "sinatra"
 require "sinatra/sequel"
 require "./lib/migrations"
+require "./lib/redis"
 require "./lib/database"
 require "./lib/aggregator"
 require "./lib/log"
@@ -48,7 +49,9 @@ module Ombudsman
 
   class Drain < Sinatra::Base
     post "/drain/:id/:secret" do |id, secret|
-      Log.parse(id, secret, request.env["rack.input"].read)
+      if req = Log.parse(id, secret, request.env["rack.input"].read)
+        Cache.rpush "requests", MultiJson.encode(req.serialized)
+      end
       ""
     end
   end
