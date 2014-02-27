@@ -11,6 +11,7 @@ Bundler.require(:default, :test)
 
 require "minitest/spec"
 require "minitest/autorun"
+require "rr"
 require "./lib/ombudsman"
 
 class MiniTest::Spec

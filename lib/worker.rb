@@ -11,7 +11,8 @@ class Worker
       puts "read request #{args.inspect}"
       req  = Request.new(args)
       return unless app = req.app
-      Aggregator.new(app, req).work!
+      endpoint = Aggregator.new(app, req).work!
+      Stats.record(endpoint, req.status)
     end
   rescue StandardError => e
     puts "WORKER FAILED: #{e.class.name} #{e.message}"

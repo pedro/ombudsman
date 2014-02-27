@@ -12,6 +12,7 @@ require "./lib/endpoint"
 require "./lib/log"
 require "./lib/redis"
 require "./lib/request"
+require "./lib/stats"
 require "./lib/worker"
 
 module Ombudsman
