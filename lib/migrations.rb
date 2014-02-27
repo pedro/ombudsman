@@ -36,3 +36,7 @@ end
 migration "add health" do
   database.add_column :endpoints, :health, :text
 end
+
+migration "add verb" do
+  database.add_column :endpoints, :verb, :text
+end

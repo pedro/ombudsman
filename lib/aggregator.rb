@@ -5,7 +5,7 @@ class Aggregator
     @app = app
     @request = request
     @signmap = app.endpoints.inject({}) do |h, endpoint|
-      h[endpoint.signature] = endpoint
+      h["#{endpoint.verb} #{endpoint.signature}"] = endpoint
       h
     end
   end
@@ -13,6 +13,8 @@ class Aggregator
   def work!
     parts = request.path.split("/")
     signature = parts.map { |p| p.sub(/^\d+$/, "\\d+") }.join("/")
-    @signmap[signature] ||= Endpoint.create(app: app, signature: signature)
+    hash = "#{request.verb} #{signature}"
+    @signmap[hash] ||= Endpoint.create(
+      app: app, verb: request.verb, signature: signature)
   end
 end
