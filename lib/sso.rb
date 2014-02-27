@@ -23,9 +23,23 @@ class SSO < Sinatra::Base
     end
   end
 
-  get "/heroku/resources/:id" do
-    unless @app = App.find(id: params[:id])
-      halt [404, "App not found"]
+  post "/sso/login" do
+    t = Time.at(params[:timestamp].to_i)
+    signature = [params[:id], ENV["SSO_SALT"], t.to_i].join(":")
+    token = Digest::SHA1.hexdigest(signature)
+
+    if token != params[:token] || t < Time.now - 120
+      halt [403, "Invalid SSO request"]
+    end
+
+    session[:app_id] = params[:id]
+    response.set_cookie('heroku-nav-data', value: params['nav-data'])
+    redirect "/dashboard"
+  end
+
+  get "/dashboard" do
+    unless @app = App.find(id: session[:app_id])
+      halt [404, "Session expired"]
     end
     erb :dashboard
   end
