@@ -5,10 +5,13 @@ require "sinatra"
 require "sinatra/sequel"
 
 require "./lib/migrations"
-require "./lib/redis"
-require "./lib/database"
+
 require "./lib/aggregator"
+require "./lib/app"
+require "./lib/endpoint"
 require "./lib/log"
+require "./lib/redis"
+require "./lib/request"
 require "./lib/worker"
 
 module Ombudsman
