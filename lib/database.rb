@@ -28,6 +28,14 @@ class Request
     @status = args[:status]
   end
 
+  def app
+    App.find(id: app_id)
+  end
+
+  def to_s
+    "#{app_id} #{verb} #{path} #{status}"
+  end
+
   def serialized
     {
       app_id: app_id,

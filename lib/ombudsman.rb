@@ -1,10 +1,14 @@
+require "multi_json"
+require "redis"
 require "sinatra"
 require "sinatra/sequel"
+
 require "./lib/migrations"
 require "./lib/redis"
 require "./lib/database"
 require "./lib/aggregator"
 require "./lib/log"
+require "./lib/worker"
 
 module Ombudsman
   class API < Sinatra::Base
