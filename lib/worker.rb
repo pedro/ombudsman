@@ -13,5 +13,7 @@ class Worker
       return unless app = req.app
       Aggregator.new(app, req).work!
     end
+  rescue StandardError => e
+    puts "WORKER FAILED: #{e.class.name} #{e.message}"
   end
 end
