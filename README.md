@@ -6,11 +6,21 @@ Heroku add-on that sits and inspects your logs, alerting when it detects a spike
 
 Install:
 
-```
+```bash
 $ heroku addons:add ombudsman
 ```
 
-Then you'll receive an email whenever your app error rates change drastically!
+Then give it some time and check the dashboard:
+
+```bash
+$ heroku addons:open ombudsman
+```
+
+To see something like:
+
+![Ombudsman Dashboard](http://f.cl.ly/items/0O2g0k0c3K1O3Q3g3M0y/Screen%20Shot%202014-02-27%20at%203.18.23%20AM.png)
+
+The idea is that you'll receive email with alerts whenever your error rates change drastically.
 
 
 ## TODO
