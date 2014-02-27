@@ -2,6 +2,7 @@ source "https://rubygems.org"
 ruby "2.1.0"
 
 gem "active_support", require: false
+gem "clockwork"
 gem "multi_json"
 gem "oj"
 gem "sequel"
