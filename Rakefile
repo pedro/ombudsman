@@ -12,10 +12,7 @@ task :sso do
   Endpoint.create(app: app, verb: "post", signature: "/users", health: "green")
   Endpoint.create(app: app, verb: "put", signature: "/users/\\d+", health: "yellow", health_msg: "dropped cache requests")
   Endpoint.create(app: app, verb: "get", signature: "/users/\\d+/photo", health: "gray", health_msg: "not enough data")
-  t = Time.now
-  signature = [app.id, ENV["SSO_SALT"], t.to_i].join(":")
-  token = Digest::SHA1.hexdigest(signature)
-  puts "/#{app.id}?token=#{token}&timestamp=#{t.to_i}"
+  exec "kensa sso #{app.id}"
 end
 
 Rake::TestTask.new do |task|
