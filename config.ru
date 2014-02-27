@@ -7,4 +7,5 @@ require "./lib/ombudsman"
 $stdout.sync = true
 
 use Drain
-run API
+use API
+run SSO

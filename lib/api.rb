@@ -2,6 +2,13 @@ class API < Sinatra::Base
   set :database, ENV["DATABASE_URL"]
 
   helpers do
+    def authorize_api!
+      unless authorized?
+        response["WWW-Authenticate"] = %(Basic realm="Restricted Area")
+        halt [401, "Not authorized"]
+      end
+    end
+
     def authorized?
       @auth ||=  Rack::Auth::Basic::Request.new(request.env)
       @auth.provided? && @auth.basic? && @auth.credentials &&
@@ -14,14 +21,8 @@ class API < Sinatra::Base
     end
   end
 
-  before do
-    unless authorized?
-      response["WWW-Authenticate"] = %(Basic realm="Restricted Area")
-      halt [401, "Not authorized"]
-    end
-  end
-
   post "/heroku/resources" do
+    authorize_api!
     options = MultiJson.decode(request.env["rack.input"].read)
     app = App.create(
       heroku_id: options["heroku_id"],
@@ -30,6 +31,7 @@ class API < Sinatra::Base
   end
 
   delete "/heroku/resources/:id" do
+    authorize_api!
     unless app = App.find(id: params[:id])
       halt [404, "App not found"]
     end
