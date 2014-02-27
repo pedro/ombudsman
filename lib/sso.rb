@@ -16,10 +16,17 @@ class SSO < Sinatra::Base
         "label-default"
       end
     end
+
+    def formatted_health_msg(endpoint)
+      return '<span class="glyphicon glyphicon-ok"></span>' if endpoint.health == "green"
+      endpoint.health_msg
+    end
   end
 
   get "/heroku/resources/:id" do
-    @app = App.first(id: params[:id])
+    unless @app = App.find(id: params[:id])
+      halt [404, "App not found"]
+    end
     erb :dashboard
   end
 end

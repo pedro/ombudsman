@@ -40,3 +40,7 @@ end
 migration "add verb" do
   database.add_column :endpoints, :verb, :text
 end
+
+migration "add health_msg" do
+  database.add_column :endpoints, :health_msg, :text
+end

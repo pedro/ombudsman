@@ -11,9 +11,17 @@ describe Health do
       assert_equal "gray", @e.health
     end
 
-    it "sets it too red when there are too many errors" do
+    it "sets it to red when there are too many errors" do
       Health.update(@e, { 500 => 20 })
       assert_equal "red", @e.health
+      assert_equal "100% errors", @e.health_msg
+    end
+
+    it "sets it too red when error rates are higher" do
+      @e.stats = { 200 => 99, 500 => 1 }
+      Health.update(@e, { 200 => 88, 500 => 12 })
+      assert_equal "red", @e.health
+      assert_equal "error rate increased 11%", @e.health_msg
     end
 
     it "updates the endpoints stats" do

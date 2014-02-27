@@ -4,17 +4,18 @@ class Health
     current_error_rate  = compute_error_rate(stats)
     previous_error_rate = compute_error_rate(endpoint.stats)
 
-    health = if stats.empty? || stats.values.all? { |v| v == 0 }
-      "gray"
+    health, msg = if stats.empty? || stats.values.all? { |v| v == 0 }
+      ["gray", "not enough data"]
     elsif current_error_rate > 20
-      "red"
+      ["red", "#{current_error_rate.to_i}% errors"]
     elsif (previous_error_rate + THRESHOLD) < current_error_rate
-      "red"
+      increase = current_error_rate - previous_error_rate
+      ["red", "error rate increased #{increase.to_i}%"]
     else
-      "green"
+      ["green"]
     end
 
-    endpoint.update(stats: stats, health: health)
+    endpoint.update(stats: stats, health: health, health_msg: msg)
   end
 
   def self.compute_error_rate(stats)
