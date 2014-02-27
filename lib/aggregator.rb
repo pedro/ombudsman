@@ -1,9 +1,9 @@
 class Aggregator
-  attr_accessor :app, :requests
+  attr_accessor :app, :request
 
-  def initialize(app, requests)
+  def initialize(app, request)
     @app = app
-    @requests = requests
+    @request = request
     @signmap = app.endpoints.inject({}) do |h, endpoint|
       h[endpoint.signature] = endpoint
       h
@@ -11,10 +11,8 @@ class Aggregator
   end
 
   def work!
-    requests.each do |req|
-      parts = req.path.split("/")
-      signature = parts.map { |p| p =~ /^\d+$/ ? "*" : p }.join("/")
-      @signmap[signature] ||= Endpoint.create(app: app, signature: signature)
-    end
+    parts = request.path.split("/")
+    signature = parts.map { |p| p.sub(/^\d+$/, "\\d+") }.join("/")
+    @signmap[signature] ||= Endpoint.create(app: app, signature: signature)
   end
 end
