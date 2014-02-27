@@ -1,6 +1,10 @@
 require "test_helper"
 
-describe Ombudsman::API do
+describe API do
+  def app
+    API
+  end
+
   describe "POST /heroku/resources" do
     before do
       @params = {

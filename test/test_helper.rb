@@ -17,10 +17,6 @@ require "./lib/ombudsman"
 class MiniTest::Spec
   include Rack::Test::Methods
 
-  def app
-    Ombudsman::API
-  end
-
   before :each do
     Cache.flushdb
   end

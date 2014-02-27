@@ -2,7 +2,7 @@ require "test_helper"
 
 describe "lame slow ass log drain" do
   def app
-    Ombudsman::Drain
+    Drain
   end
 
   it "drops invalid logs" do
