@@ -5,11 +5,12 @@ class Stats
     t = Time.now
     bucket = t.min % WINDOW
     key = "#{endpoint.id}:#{bucket}"
-    Cache.multi do
-      unless Cache.exists(key)
-        Cache.expire(key, WINDOW * 60)
-      end
-      Cache.hincrby(key, status.to_s, 1)
+
+    # TOTALLY SAFE AGAINST RACE CONDITIONS!!!11
+    exists = Cache.exists(key)
+    Cache.hincrby(key, status.to_s, 1)
+    unless exists
+      Cache.expire(key, WINDOW * 60)
     end
   end
 

@@ -23,6 +23,13 @@ describe Stats do
       assert_equal 1, Cache.hget("42:1", "500").to_i
       assert_equal 1, Cache.hget("42:1", "503").to_i
     end
+
+    it "expires these keys so we reset the count for the next window" do
+      Timecop.freeze(Time.mktime(2014, 1, 1, 12, 00)) do
+        Stats.record(@e, 200)
+      end
+      assert_equal 300, Cache.ttl("42:0")
+    end
   end
 
   describe ".summary" do
