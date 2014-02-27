@@ -33,7 +33,7 @@ describe Stats do
   end
 
   describe ".summary" do
-    it "returns the accumulated status" do
+    it "returns the accumulated status for the last window" do
       Cache.hset("42:0", "200", 4)
       Cache.hset("42:0", "500", 2)
       Cache.hset("42:1", "200", 1)
