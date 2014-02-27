@@ -14,7 +14,6 @@ class Health
       "green"
     end
 
-    puts "health #{endpoint.id}=#{health}"
     endpoint.update(stats: stats, health: health)
   end
 
