@@ -17,7 +17,6 @@ Then you'll receive an email whenever your app error rates change drastically!
 
 - More flexible route information
   - Allow users to update their own route signatures
-- Throw requests in REDIS!
 - Create new measurement redis-backed model
   - For every window of X minutes, store status codes and their counts (eg: 200: 4, 422: 2, 500: 1)
 - Add alerting:
