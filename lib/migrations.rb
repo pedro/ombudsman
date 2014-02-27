@@ -28,3 +28,7 @@ migration "add stats to endpoints" do
   database.add_column :endpoints, :stats, :hstore
   database.add_column :endpoints, :stats_collected_at, :timestamp
 end
+
+migration "index" do
+  database.add_index :endpoints, :app_id
+end
