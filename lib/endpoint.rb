@@ -1,6 +1,11 @@
 class Endpoint < Sequel::Model
   many_to_one :app
 
+  def before_create
+    self.health = "gray"
+    self.health_msg = "not enough data"
+  end
+
   def stats=(s)
     super(Sequel.hstore(s))
     self.stats_collected_at = Time.now
