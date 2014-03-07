@@ -21,7 +21,10 @@ migration "create endpoints" do
 end
 
 migration "add hstore" do
-  database.run "CREATE EXTENSION hstore;"
+  begin
+    database.run "CREATE EXTENSION hstore;"
+  rescue PG::UniqueViolation
+  end
 end
 
 migration "add stats to endpoints" do
