@@ -17,7 +17,7 @@ describe "lame slow ass log drain" do
     assert_equal 0, Cache.llen("requests")
   end
 
-  it "authenticates" do
+  it "puts valid logs in a queue for processing" do
     Cache.set("auth-1234", "secret")
     raw = '241 <158>1 2014-02-25T08:42:07.784181+00:00 host heroku router - at=info method=GET path=/foo host=pedro-dev.herokuapp.com request_id=ccdec783-b755-4b25-802e-00b1f99ee357 fwd="199.21.84.17" dyno=web.1 connect=2ms service=22ms status=200 bytes=5077'
     post "/drain/1234/secret", raw
