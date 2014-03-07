@@ -19,7 +19,7 @@ $ heroku addons:open ombudsman
 
 To see something like:
 
-![Ombudsman Dashboard](http://f.cl.ly/items/0O2g0k0c3K1O3Q3g3M0y/Screen%20Shot%202014-02-27%20at%203.18.23%20AM.png)
+![Ombudsman Dashboard](http://f.cl.ly/items/1t0F2v0V1s2A1n192u3A/Screen%20Shot%202014-03-06%20at%206.05.04%20PM.png)
 
 The idea is that you'll receive email with alerts whenever your error rates change drastically.
 
