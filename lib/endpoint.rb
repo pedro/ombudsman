@@ -1,4 +1,6 @@
 class Endpoint < Sequel::Model
+  set_dataset dataset.order(:signature)
+
   many_to_one :app
 
   def before_create
