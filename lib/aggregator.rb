@@ -12,7 +12,7 @@ class Aggregator
 
   def work!
     parts = request.path.split("/")
-    signature = parts.map { |p| p.sub(/^\d+$/, "\\d+") }.join("/")
+    signature = parts.map { |p| p.sub(/^\d+$/, "*") }.join("/")
     hash = "#{request.verb} #{signature}"
     @signmap[hash] ||= Endpoint.create(
       app: app, verb: request.verb, signature: signature)

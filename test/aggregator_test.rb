@@ -14,10 +14,10 @@ describe Aggregator do
     end
 
     it "reuses endpoints with the same signature" do
-      Endpoint.create(app: @app, verb: "get", signature: "/foo/\\d+")
+      Endpoint.create(app: @app, verb: "get", signature: "/foo/*")
       @agg = Aggregator.new(@app, Request.new(verb: "get", path: "/foo/42"))
       endpoint = @agg.work!
-      assert_equal %w( /foo/\d+ ), @app.endpoints.map(&:signature).sort
+      assert_equal %w( /foo/* ), @app.endpoints.map(&:signature).sort
     end
   end
 end
