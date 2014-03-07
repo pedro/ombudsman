@@ -1,2 +1,3 @@
 .env
 addon-manifest.json
+.DS_Store
