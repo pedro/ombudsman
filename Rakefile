@@ -1,6 +1,8 @@
 require "rake/testtask"
 
 task :default => :test
+
+desc "Seed data, start SSO session"
 task :sso do
   require "./lib/ombudsman"
   options = { heroku_id: "test@localhost" }
