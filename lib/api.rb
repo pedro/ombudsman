@@ -27,6 +27,7 @@ class API < Sinatra::Base
     app = App.create(
       heroku_id: options["heroku_id"],
       syslog_token: options["syslog_token"])
+    Cache.set("auth-#{app.id}", app.drain_secret)
     respond(app.serialized)
   end
 
@@ -36,6 +37,7 @@ class API < Sinatra::Base
       halt [404, "App not found"]
     end
     app.destroy
+    Cache.del("auth-#{app.id}")
     respond({})
   end
 end

@@ -24,6 +24,7 @@ describe API do
       assert_equal 200, last_response.status
       app = App.first(id: last_json["id"])
       assert_equal "app123@heroku.com", app.heroku_id
+      assert_equal app.drain_secret, Cache.get("auth-#{app.id}")
     end
 
     it "renders drain info" do
