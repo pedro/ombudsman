@@ -43,6 +43,7 @@ To deploy as a new add-on:
 $ cp sample-addon-manifest.json addon-manifest.json
 # change .env
 $ kensa test
+$ rake sso
 $ kensa push
 ```
 
