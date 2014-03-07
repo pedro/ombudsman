@@ -29,6 +29,8 @@ The idea is that you'll receive email with alerts whenever your error rates chan
 You'll need Postgres and Redis.
 
 ```bash
+$ createdb ombudsman-test
+$ createdb ombudsman
 $ bundle install
 $ cp .env.sample .env
 $ rake
