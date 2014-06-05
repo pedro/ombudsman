@@ -13,6 +13,11 @@ class Health
     elsif current_rates[:errors] > (previous_rates[:errors] + THRESHOLD)
       increase = current_rates[:errors] - previous_rates[:errors]
       ["red", "error rate increased #{increase.to_i}%"]
+    elsif current_rates[:user_errors] > 5
+      ["yellow", "#{current_rates[:user_errors].to_i}% user errors"]
+    elsif current_rates[:user_errors] > (previous_rates[:user_errors] + THRESHOLD)
+      increase = current_rates[:user_errors] - previous_rates[:user_errors]
+      ["yellow", "user error rate increased #{increase.to_i}%"]
     else
       ["green"]
     end

@@ -29,6 +29,12 @@ describe Health do
       assert_equal "error rate increased 2%", @e.health_msg
     end
 
+    it "sets it to yellow when user errors are over 5%" do
+      Health.update(@e, { 200 => 94, 401 => 6 }, {})
+      assert_equal "yellow", @e.health
+      assert_equal "6% user errors", @e.health_msg
+    end
+
     it "updates the endpoints stats with the last hour" do
       Health.update(@e, {}, { 200 => 1 })
       assert_equal({ 200 => 1 }, @e.stats)
