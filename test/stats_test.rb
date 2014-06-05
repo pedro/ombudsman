@@ -28,17 +28,27 @@ describe Stats do
       Timecop.freeze(Time.mktime(2014, 1, 1, 12, 00)) do
         Stats.record(@e, 200)
       end
-      assert_equal 300, Cache.ttl("42:0")
+      assert_equal 3600, Cache.ttl("42:0")
     end
   end
 
   describe ".summary" do
-    it "returns the accumulated status for the last window" do
+    it "returns the accumulated status for the specified window" do
       Cache.hset("42:0", "200", 4)
       Cache.hset("42:0", "500", 2)
       Cache.hset("42:1", "200", 1)
       Cache.hset("42:4", "500", 1)
-      assert_equal({ 200 => 5, 500 => 3 }, Stats.summary(@e))
+      Timecop.freeze(Time.mktime(2014, 1, 1, 12, 5)) do
+        assert_equal({ 200 => 5, 500 => 3 }, Stats.summary(@e, 5))
+      end
+    end
+
+    it "wraps around" do
+      Cache.hset("42:0", "200", 1)
+      Cache.hset("42:59", "200", 1)
+      Timecop.freeze(Time.mktime(2014, 1, 1, 12, 0)) do
+        assert_equal({ 200 => 2 }, Stats.summary(@e, 1))
+      end
     end
   end
 end

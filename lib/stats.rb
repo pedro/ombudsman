@@ -1,9 +1,9 @@
 class Stats
-  WINDOW = 5 # in minutes
+  WINDOW = 60 # in minutes
 
   def self.record(endpoint, status)
     t = Time.now
-    bucket = t.min % WINDOW
+    bucket = t.min
     key = "#{endpoint.id}:#{bucket}"
 
     # TOTALLY SAFE AGAINST RACE CONDITIONS!!!11
@@ -14,10 +14,13 @@ class Stats
     end
   end
 
-  def self.summary(endpoint)
+  def self.summary(endpoint, duration)
     t = Time.now
     stats = Hash.new(0)
-    (0..WINDOW).each do |bucket|
+    (duration + 1).times do |i|
+      bucket = t.min - i
+      bucket += 60 if bucket < 0
+
       Cache.hgetall("#{endpoint.id}:#{bucket}").each do |k, v|
         stats[k.to_i] += v.to_i
       end
