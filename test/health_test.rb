@@ -11,6 +11,12 @@ describe Health do
       assert_equal "gray", @e.health
     end
 
+    it "keeps the previous status when nothing happened in the last 5 mins" do
+      @e.update(health: "red")
+      Health.update(@e, {}, { 500 => 1 })
+      assert_equal "red", @e.health
+    end
+
     it "sets it to red when there are too many errors" do
       Health.update(@e, { 500 => 20 }, {})
       assert_equal "red", @e.health

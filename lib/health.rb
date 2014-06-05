@@ -6,6 +6,8 @@ class Health
 
     health, msg = if no_data?(last_5) && no_data?(last_hour)
       ["gray", "not enough data"]
+    elsif no_data?(last_5) # nothing changed
+      [endpoint.health, endpoint.health_msg]
     elsif current_error_rate > 20
       ["red", "#{current_error_rate.to_i}% errors"]
     elsif (previous_error_rate + THRESHOLD) < current_error_rate
