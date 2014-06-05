@@ -1,10 +1,10 @@
 class Health
   THRESHOLD = 5
-  def self.update(endpoint, stats)
-    current_error_rate  = compute_error_rate(stats)
-    previous_error_rate = compute_error_rate(endpoint.stats)
+  def self.update(endpoint, last_5, last_hour)
+    current_error_rate  = compute_error_rate(last_5)
+    previous_error_rate = compute_error_rate(last_hour)
 
-    health, msg = if stats.empty? || stats.values.all? { |v| v == 0 }
+    health, msg = if no_data?(last_5) && no_data?(last_hour)
       ["gray", "not enough data"]
     elsif current_error_rate > 20
       ["red", "#{current_error_rate.to_i}% errors"]
@@ -15,7 +15,11 @@ class Health
       ["green"]
     end
 
-    endpoint.update(stats: stats, health: health, health_msg: msg)
+    endpoint.update(stats: last_hour, health: health, health_msg: msg)
+  end
+
+  def self.no_data?(stats)
+    stats.empty? || stats.values.all? { |v| v == 0 }
   end
 
   def self.compute_error_rate(stats)

@@ -6,9 +6,10 @@ $stdout.sync = true
 module Clockwork
   every(5.minutes, "store-stats", thread: true) do
     Endpoint.dataset.use_cursor.each do |e|
-      stats = Stats.summary(e)
-      puts "updating #{e.id}: #{stats.inspect}"
-      Health.update(e, stats)
+      puts "updating #{e.id}"
+      last_5    = Stats.summary(e, 5)
+      last_hour = Stats.summary(e, 60)
+      Health.update(e, last_5, last_hour)
     end
   end
 end
