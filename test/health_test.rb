@@ -23,7 +23,7 @@ describe Health do
       assert_equal "6% errors", @e.health_msg
     end
 
-    it "sets it too red when error rates are rising" do
+    it "sets it to red when error rates are rising" do
       Health.update(@e, { 200 => 100, 500 => 4 }, { 200 => 100, 500 => 1 })
       assert_equal "red", @e.health
       assert_equal "error rate increased 2%", @e.health_msg
