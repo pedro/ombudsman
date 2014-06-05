@@ -1,5 +1,5 @@
 class Health
-  THRESHOLD = 5
+  THRESHOLD = 2
   def self.update(endpoint, last_5, last_hour)
     current_error_rate  = compute_error_rate(last_5)
     previous_error_rate = compute_error_rate(last_hour)
@@ -8,7 +8,7 @@ class Health
       ["gray", "not enough data"]
     elsif no_data?(last_5) # nothing changed
       [endpoint.health, endpoint.health_msg]
-    elsif current_error_rate > 20
+    elsif current_error_rate > 5
       ["red", "#{current_error_rate.to_i}% errors"]
     elsif (previous_error_rate + THRESHOLD) < current_error_rate
       increase = current_error_rate - previous_error_rate
