@@ -2,7 +2,7 @@
   <table class="table">
     <% @app.endpoints.each do |e| %>
       <tr class="status-<%= e.health %>">
-        <td><%= e.verb %></td>
+        <td><%= e.verb.upcase %></td>
         <td><%= e.signature %></td>
         <td>
           <span class="label <%= label_for_health(e.health) %>">
