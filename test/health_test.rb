@@ -18,9 +18,9 @@ describe Health do
     end
 
     it "sets it to red when error rate is over 5%" do
-      Health.update(@e, { 200 => 100, 500 => 6 }, {})
+      Health.update(@e, { 200 => 94, 500 => 6 }, {})
       assert_equal "red", @e.health
-      assert_equal "5% errors", @e.health_msg
+      assert_equal "6% errors", @e.health_msg
     end
 
     it "sets it too red when error rates are rising" do
@@ -49,14 +49,21 @@ describe Health do
     end
   end
 
-  describe ".compute_error_rate" do
+  describe ".compute_rates" do
     it "returns 0 if there are no requests" do
-      assert_equal 0, Health.compute_error_rate({})
+      rates = Health.compute_rates({})
+      assert_equal 0, rates[:errors]
+      assert_equal 0, rates[:user_errors]
     end
 
-    it "returns the % of 50x requests" do
-      assert_equal 10, Health.compute_error_rate(200 => 9, 500 => 1)
-      assert_equal 100, Health.compute_error_rate(503 => 1)
+    it "returns the % of 50x requests for errors" do
+      rates = Health.compute_rates(200 => 8, 500 => 1, 503 => 1)
+      assert_equal 20, rates[:errors]
+    end
+
+    it "returns the % of 40x requests for user_errors" do
+      rates = Health.compute_rates(200 => 8, 401 => 1, 429 => 1)
+      assert_equal 20, rates[:user_errors]
     end
   end
 end
