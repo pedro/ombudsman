@@ -10,7 +10,7 @@ class Health
       [endpoint.health, endpoint.health_msg]
     elsif current_error_rate > 5
       ["red", "#{current_error_rate.to_i}% errors"]
-    elsif (previous_error_rate + THRESHOLD) < current_error_rate
+    elsif current_error_rate > (previous_error_rate + THRESHOLD)
       increase = current_error_rate - previous_error_rate
       ["red", "error rate increased #{increase.to_i}%"]
     else
